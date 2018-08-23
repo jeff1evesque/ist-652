@@ -1,19 +1,15 @@
-#
-# twitter_scraper.py
-#
-# Note: the following modules are required:
-#
-#     sudo apt-get install -y python-lxml
-#     sudo pip install twitterscraper
-#
+#!/usr/bin/env python
+
+import json
+from sys import argv
 from twitterscraper import query_tweets
 
-def twitter_scraper(hashtag):
+def twitter_scraper(query, quantity=10, outfile='twitter.json'):
     '''
 
     @hashtag, may contain queries in the following pattern
 
-        'happy hour' -> Finds tweets: containing the exact phrase 'happy hour.'
+        'happy hour' -> Finds tweets: containing the exact phrase 'happy hour'.
 
         'love OR hate' -> Finds tweets: containing either 'love' or 'hate' (or both).
 
@@ -27,7 +23,7 @@ def twitter_scraper(hashtag):
 
         '@mashable' -> Finds tweets: Referencing person 'mashable.'
 
-        ''happy hour' near:'san francisco'' -> Finds tweets: containing the exact phrase 'happy hour' and sent near 'san francisco.'
+        '"happy hour" near:"san francisco"' -> Finds tweets: containing the exact phrase 'happy hour' and sent near 'san francisco.'
 
         'near:NYC within:15mi' -> Finds tweets: sent within 15 miles of 'NYC.'
 
@@ -50,11 +46,19 @@ def twitter_scraper(hashtag):
 
     '''
 
-    with open('output.txt', 'a') as f:
-
-        for tweet in query_tweets(hashtag, 10):
-            f.write('text: {}, likes: {}'.format(repr(tweet.text), repr(tweet.likes)))
-        file.close()
+    with open(outfile, 'w') as file:
+        #
+        # @tweet, contains the following attributes
+        #
+        #
+        for tweet in query_tweets(query, int(quantity)):
+            json.dump({
+                'text': tweet.text,
+                'likes': tweet.likes,
+                'retweets': tweet.retweets,
+                'replies': tweet.replies,
+                'user': tweet.user
+            }, file, indent=4)
 
 if __name__ == '__main__':
-    twitter_scraper()
+    twitter_scraper(*argv[1:])
