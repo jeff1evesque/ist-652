@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from datetime import datetime
-import utility.twitter_scraper
+from utility import twitter_scraper
 
 def run(twitter=True):
     '''
