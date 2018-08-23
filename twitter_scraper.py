@@ -7,7 +7,7 @@ from twitterscraper import query_tweets
 def twitter_scraper(query, quantity=10, outfile='twitter.json'):
     '''
 
-    @hashtag, may contain queries in the following pattern
+    @query, may contain the following pattern:
 
         'happy hour' -> Finds tweets: containing the exact phrase 'happy hour'.
 
