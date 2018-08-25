@@ -39,8 +39,8 @@ def run(twitter=True):
             twitter_scraper(
                 tag,
                 outfile='data/{}--{}.json'.format(
-                    datetime.now().strftime('%Y-%m-%d--%H-%M-%S'),
-                    tag
+                    tag,
+                    datetime.now().strftime('%Y-%m-%d--%H-%M-%S')
                 )
             )
 
