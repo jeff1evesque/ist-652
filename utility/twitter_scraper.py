@@ -57,7 +57,8 @@ def twitter_scraper(query, quantity=10, outfile='twitter.json'):
                 'likes': tweet.likes,
                 'retweets': tweet.retweets,
                 'replies': tweet.replies,
-                'user': tweet.user
+                'user': tweet.user,
+                'timestamp': str(tweet.timestamp)
             }, file, indent=4)
 
 if __name__ == '__main__':
