@@ -1,0 +1,7 @@
+# ignore files
+*.pyc
+/ubuntu-*-cloudimg-console.log
+
+# ignore directories
+/data
+/.vagrant

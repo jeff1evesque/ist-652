@@ -11,8 +11,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    apt-get install -y python-pip git libxml2 python-dev
-    pip install --upgrade setuptools
-    pip install twitterscraper beautifulsoup4
+    apt-get install -y python3-pip
+    pip3 install twitterscraper beautifulsoup4
   SHELL
 end
