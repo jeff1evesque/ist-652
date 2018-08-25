@@ -11,6 +11,7 @@ def run(twitter=True):
 
     '''
 
+    twitter_dir = 'data/twitter'
     tags = [
         'apple',
         'walmart',
@@ -31,14 +32,15 @@ def run(twitter=True):
         'jason_stratham',
     ]
 
-    if not os.path.exists('data'):
-        os.makedirs('data')
+    if not os.path.exists(twitter_dir):
+        os.makedirs(twitter_dir)
 
     if twitter:
         for tag in tags:
             twitter_scraper(
                 tag,
-                outfile='data/{}--{}.json'.format(
+                outfile='{}/{}--{}.json'.format(
+                    twitter_dir,
                     tag,
                     datetime.now().strftime('%Y-%m-%d--%H-%M-%S')
                 )
