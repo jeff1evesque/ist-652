@@ -42,7 +42,7 @@ def run(twitter=True):
                 outfile='{}/{}--{}.json'.format(
                     twitter_dir,
                     tag,
-                    datetime.now().strftime('%Y-%m-%d--%H-%M-%S')
+                    datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 )
             )
 
