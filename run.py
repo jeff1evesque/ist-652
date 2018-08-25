@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 from datetime import datetime
 from utility.twitter_scraper import twitter_scraper
 
@@ -29,6 +30,9 @@ def run(twitter=True):
         'dwayne_johnson',
         'jason_stratham',
     ]
+
+    if not os.path.exists('data'):
+        os.makedirs('data')
 
     if twitter:
         for tag in tags:
