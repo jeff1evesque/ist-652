@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from datetime import datetime
-from utility import twitter_scraper
+from utility.twitter_scraper import twitter_scraper
 
 def run(twitter=True):
     '''
@@ -34,7 +34,7 @@ def run(twitter=True):
         for tag in tags:
             twitter_scraper(
                 tag,
-                outfile='data/{}--{s}.json'.format(
+                outfile='data/{}--{}.json'.format(
                     datetime.now().strftime('%Y-%m-%d--%H-%M-%S'),
                     tag
                 )
