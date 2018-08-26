@@ -62,7 +62,14 @@ def run(twitter=True, wikipedia=True):
 
     if wikipedia:
         for date in dates:
-            wikipedia_scraper(date)
+            wikipedia_scraper(
+                date,
+                outfile='{}/{}--{}.json'.format(
+                    'data/wikipedia',
+                    date.replace('/', '-'),
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                )
+            )
 
 if __name__ == '__main__':
     run()
