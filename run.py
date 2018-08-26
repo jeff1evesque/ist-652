@@ -2,6 +2,8 @@
 
 import os
 import datetime
+from config import tags
+from sys import argv
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from dateutil.relativedelta import relativedelta
@@ -24,26 +26,6 @@ def run(twitter=True, wikipedia=True):
     while current <= today:
         dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
         current += relativedelta(months=1)
-
-    tags = [
-        'apple',
-        'walmart',
-        'amazon',
-        'democrats',
-        'gop',
-        'nfl',
-        'nba',
-        'mlb',
-        'nhl',
-        'shakira',
-        'eminem',
-        'rihanna',
-        'justin_bieber',
-        'vin_diesel',
-        'will_smith',
-        'dwayne_johnson',
-        'jason_stratham',
-    ]
 
     for dir in dirs:
         if not os.path.exists(dir):
@@ -72,4 +54,4 @@ def run(twitter=True, wikipedia=True):
             )
 
 if __name__ == '__main__':
-    run()
+    run(*argv[1:])
