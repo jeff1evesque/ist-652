@@ -14,6 +14,8 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
     '''
 
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
+    result = []
+
     with open(outfile, 'w') as file:
         r = requests.get(
             '{}/metrics/pageviews/top/{}/all-access/{}'.format(
@@ -22,7 +24,13 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
                 date
             )
         )
+
+        for item in json.loads(r.text)['items'][0]['articles']:
+            result.append(item['article']))
+
         json.dump(r.json(), file, indent=4)
+
+        return(result)
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
