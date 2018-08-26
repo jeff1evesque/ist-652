@@ -50,7 +50,6 @@ def twitter_scraper(query, quantity=10, outfile='twitter.json'):
         #
         # @tweet, contains the following attributes
         #
-        #
         for tweet in query_tweets(query, int(quantity)):
             json.dump({
                 'text': tweet.text,
