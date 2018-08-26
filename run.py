@@ -62,7 +62,6 @@ def run(twitter=True, wikipedia=True):
 
     if wikipedia:
         for date in dates:
-            print(date)
             wikipedia_scraper(date)
 
 if __name__ == '__main__':
