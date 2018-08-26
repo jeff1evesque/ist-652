@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-tags = [
+hashtags = [
     'apple',
     'walmart',
     'amazon',

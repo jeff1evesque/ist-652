@@ -2,7 +2,7 @@
 
 import os
 import datetime
-from config import tags
+from config import hashtags
 from sys import argv
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
@@ -32,12 +32,12 @@ def run(twitter=True, wikipedia=True):
             os.makedirs(dir)
 
     if twitter:
-        for tag in tags:
+        for hashtag in hashtags:
             twitter_scraper(
-                tag,
+                hashtag,
                 outfile='{}/{}--{}.json'.format(
                     'data/twitter',
-                    tag,
+                    hashtag,
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 )
             )
