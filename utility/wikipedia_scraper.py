@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import json
 import requests
 
 def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json'):
@@ -21,6 +22,7 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
                 date
             )
         )
+        json.dump(r.json(), file, indent=4)
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
