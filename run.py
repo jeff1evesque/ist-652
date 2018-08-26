@@ -1,17 +1,30 @@
 #!/usr/bin/env python
 
 import os
-from datetime import datetime
+import datetime
 from utility.twitter_scraper import twitter_scraper
+from utility.wikipedia_scraper import wikipedia_scraper
+from dateutil.relativedelta import relativedelta
 
-def run(twitter=True):
+def run(twitter=True, wikipedia=True):
     '''
 
     execute custom twitter_scraper.
 
     '''
 
-    twitter_dir = 'data/twitter'
+    prefix = 'data'
+    types = ['twitter', 'wikipedia']
+    dirs = [prefix + '/' + type for type in types]
+
+    today = datetime.date.today()
+    current = datetime.date(2016, 8, 1)
+    dates = []
+
+    while current <= today:
+        dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
+        current += relativedelta(months=1)
+
     tags = [
         'apple',
         'walmart',
@@ -32,19 +45,25 @@ def run(twitter=True):
         'jason_stratham',
     ]
 
-    if not os.path.exists(twitter_dir):
-        os.makedirs(twitter_dir)
+    for dir in dirs:
+        if not os.path.exists(dir):
+            os.makedirs(dir)
 
     if twitter:
         for tag in tags:
             twitter_scraper(
                 tag,
                 outfile='{}/{}--{}.json'.format(
-                    twitter_dir,
+                    'data/twitter',
                     tag,
-                    datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 )
             )
+
+    if wikipedia:
+        for date in dates:
+            print(date)
+            wikipedia_scraper(date)
 
 if __name__ == '__main__':
     run()
