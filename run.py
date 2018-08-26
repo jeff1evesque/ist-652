@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 def run(twitter=True, wikipedia=True):
     '''
 
-    execute custom twitter_scraper.
+    execute custom twitter + wikipedia scraping.
 
     '''
 
@@ -22,6 +22,7 @@ def run(twitter=True, wikipedia=True):
     today = datetime.date.today()
     current = datetime.date(2016, 8, 1)
     dates = []
+    articles = []
 
     while current <= today:
         dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
@@ -44,12 +45,14 @@ def run(twitter=True, wikipedia=True):
 
     if wikipedia:
         for date in dates:
-            wikipedia_scraper(
-                date,
-                outfile='{}/{}--{}.json'.format(
-                    'data/wikipedia',
-                    date.replace('/', '-'),
-                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+            articles.append(
+                wikipedia_scraper(
+                    date,
+                    outfile='{}/{}--{}.json'.format(
+                        'data/wikipedia',
+                        date.replace('/', '-'),
+                        datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                    )
                 )
             )
 
