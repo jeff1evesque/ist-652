@@ -16,7 +16,6 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
     '''
 
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
-    result = []
 
     with open(outfile, 'w') as jsonfile:
         # scrape wikipedia api
@@ -46,8 +45,6 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
 
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
-
-        return(result)
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
