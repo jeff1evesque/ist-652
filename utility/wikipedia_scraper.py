@@ -30,8 +30,14 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
         # write article to textfile
         for item in json.loads(r.text)['items'][0]['articles']:
             article = item['article']
-            with open('data/wikipedia/articles/{}.txt'.format(article), 'w') as txtfile:
-                txtfile.write(wikipedia.WikipediaPage(title=article).summary)
+
+            try:
+                with open('data/wikipedia/articles/{}.txt'.format(article.replace(':', '-'), 'w')) as txtfile:
+                    txtfile.write(wikipedia.WikipediaPage(title=article).summary)
+            except OSError as e:
+                print('not a valid article: {}'.format(e))
+            except wikipedia.exceptions.DisambiguationError as e:
+                print('{} not valid, alternative titles: {}'.format(article, e.options))
 
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
