@@ -38,9 +38,11 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
                     txtfile.write(wikipedia.WikipediaPage(title=article).summary)
             except OSError as e:
                 print('not a valid article: {}'.format(e))
+            except KeyError as e:
+                print('{} not valid: {}'.format(article, e))
             except wikipedia.exceptions.DisambiguationError as e:
                 print('{} not valid, alternative titles: {}'.format(article, e.options))
-            except KeyError as e:
+            except wikipedia.exceptions.PageError as e:
                 print('{} not valid: {}'.format(article, e))
 
         # report top 1000 article
