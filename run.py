@@ -22,7 +22,6 @@ def run(twitter=False, wikipedia=True):
     today = datetime.date.today()
     current = datetime.date(2016, 8, 1)
     dates = []
-    articles = set()
 
     while current <= today:
         dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
@@ -45,14 +44,12 @@ def run(twitter=False, wikipedia=True):
 
     if wikipedia:
         for date in dates:
-            articles.add(
-                wikipedia_scraper(
-                    date,
-                    outfile='{}/{}--{}.json'.format(
-                        'data/wikipedia',
-                        date.replace('/', '-'),
-                        datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                    )
+            wikipedia_scraper(
+                date,
+                outfile='{}/{}--{}.json'.format(
+                    'data/wikipedia',
+                    date.replace('/', '-'),
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 )
             )
 
