@@ -6,6 +6,7 @@ from config import hashtags
 from sys import argv
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
+from utility.frequency_counter import frequency_counter
 from dateutil.relativedelta import relativedelta
 
 def run(twitter=True, wikipedia=True):
@@ -22,7 +23,7 @@ def run(twitter=True, wikipedia=True):
     today = datetime.date.today()
     current = datetime.date(2016, 8, 1)
     dates = []
-    articles = []
+    articles = set()
 
     while current <= today:
         dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
@@ -45,7 +46,7 @@ def run(twitter=True, wikipedia=True):
 
     if wikipedia:
         for date in dates:
-            articles.append(
+            articles.add(
                 wikipedia_scraper(
                     date,
                     outfile='{}/{}--{}.json'.format(
@@ -54,6 +55,12 @@ def run(twitter=True, wikipedia=True):
                         datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                     )
                 )
+            )
+
+        for article in articles:
+            frequency_counter(
+                article,
+                outdir='data/wikipedia/articles'
             )
 
 if __name__ == '__main__':
