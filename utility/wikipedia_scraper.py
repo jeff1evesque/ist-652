@@ -34,7 +34,7 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
             article_filename = reduce(lambda a, kv: a.replace(*kv), repls.items(), article)
 
             try:
-                with open('data/wikipedia/articles/{}.txt'.format(article_filename)) as txtfile:
+                with open('data/wikipedia/articles/{}.txt'.format(article_filename), 'w') as txtfile:
                     txtfile.write(wikipedia.WikipediaPage(title=article).summary)
             except OSError as e:
                 print('not a valid article: {}'.format(e))
