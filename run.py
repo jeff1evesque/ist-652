@@ -17,7 +17,7 @@ def run(twitter=True, wikipedia=True):
     '''
 
     prefix = 'data'
-    types = ['twitter', 'wikipedia']
+    types = ['twitter', 'wikipedia/articles']
     dirs = [prefix + '/' + type for type in types]
 
     today = datetime.date.today()
@@ -55,12 +55,6 @@ def run(twitter=True, wikipedia=True):
                         datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                     )
                 )
-            )
-
-        for article in articles:
-            frequency_counter(
-                article,
-                outdir='data/wikipedia/articles'
             )
 
 if __name__ == '__main__':
