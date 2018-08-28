@@ -2,6 +2,8 @@
 
 import os
 import datetime
+from config import hashtags
+from sys import argv
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from dateutil.relativedelta import relativedelta
@@ -9,12 +11,12 @@ from dateutil.relativedelta import relativedelta
 def run(twitter=True, wikipedia=True):
     '''
 
-    execute custom twitter_scraper.
+    execute custom twitter + wikipedia scraping.
 
     '''
 
     prefix = 'data'
-    types = ['twitter', 'wikipedia']
+    types = ['twitter', 'wikipedia/articles']
     dirs = [prefix + '/' + type for type in types]
 
     today = datetime.date.today()
@@ -25,37 +27,17 @@ def run(twitter=True, wikipedia=True):
         dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
         current += relativedelta(months=1)
 
-    tags = [
-        'apple',
-        'walmart',
-        'amazon',
-        'democrats',
-        'gop',
-        'nfl',
-        'nba',
-        'mlb',
-        'nhl',
-        'shakira',
-        'eminem',
-        'rihanna',
-        'justin_bieber',
-        'vin_diesel',
-        'will_smith',
-        'dwayne_johnson',
-        'jason_stratham',
-    ]
-
     for dir in dirs:
         if not os.path.exists(dir):
             os.makedirs(dir)
 
     if twitter:
-        for tag in tags:
+        for hashtag in hashtags:
             twitter_scraper(
-                tag,
+                hashtag,
                 outfile='{}/{}--{}.json'.format(
                     'data/twitter',
-                    tag,
+                    hashtag,
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 )
             )
@@ -72,4 +54,4 @@ def run(twitter=True, wikipedia=True):
             )
 
 if __name__ == '__main__':
-    run()
+    run(*argv[1:])
