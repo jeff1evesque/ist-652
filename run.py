@@ -8,7 +8,7 @@ from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from dateutil.relativedelta import relativedelta
 
-def run(twitter=False, wikipedia=True):
+def run(twitter=True, wikipedia=True):
     '''
 
     execute custom twitter + wikipedia scraping.
