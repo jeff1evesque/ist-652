@@ -12,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 def run(twitter=True, wikipedia=True, nasdaq=True):
     '''
 
-    execute custom twitter + wikipedia scraping.
+    execute custom twitter, wikipedia, nasdaq scraping.
 
     '''
 
