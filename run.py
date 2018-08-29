@@ -55,7 +55,7 @@ def run(twitter=False, wikipedia=False, nasdaq=True):
             )
 
     if nasdaq:
-        nasdaq_scraper(today, 'data/nasdaq')
+        nasdaq_scraper(today, outfile='data/nasdaq')
 
 if __name__ == '__main__':
     run(*argv[1:])
