@@ -17,7 +17,7 @@ def run(twitter=True, wikipedia=True, nasdaq=True):
     '''
 
     prefix = 'data'
-    types = ['twitter', 'wikipedia/articles']
+    types = ['twitter', 'wikipedia/articles', 'nasdaq']
     dirs = [prefix + '/' + type for type in types]
 
     today = datetime.date.today()
