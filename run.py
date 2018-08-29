@@ -6,9 +6,10 @@ from config import hashtags
 from sys import argv
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
+from utility.nasdaq_scraper import nasdaq_scraper
 from dateutil.relativedelta import relativedelta
 
-def run(twitter=True, wikipedia=True):
+def run(twitter=True, wikipedia=True, nasdaq=True):
     '''
 
     execute custom twitter + wikipedia scraping.
@@ -52,6 +53,9 @@ def run(twitter=True, wikipedia=True):
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 )
             )
+
+    if nasdaq:
+        nasdaq_scraper(date, 'data/nasdaq')
 
 if __name__ == '__main__':
     run(*argv[1:])
