@@ -9,7 +9,7 @@ from utility.wikipedia_scraper import wikipedia_scraper
 from utility.nasdaq_scraper import nasdaq_scraper
 from dateutil.relativedelta import relativedelta
 
-def run(twitter=True, wikipedia=True, nasdaq=True):
+def run(twitter=False, wikipedia=False, nasdaq=True):
     '''
 
     execute custom twitter, wikipedia, nasdaq scraping.
@@ -21,12 +21,12 @@ def run(twitter=True, wikipedia=True, nasdaq=True):
     dirs = [prefix + '/' + type for type in types]
 
     today = datetime.date.today()
-    current = datetime.date(2016, 8, 1)
+    before = datetime.date(2016, 8, 1)
     dates = []
 
-    while current <= today:
-        dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
-        current += relativedelta(months=1)
+    while before <= today:
+        dates.append(datetime.datetime.strftime(before, '%Y/%m/01'))
+        before += relativedelta(months=1)
 
     for dir in dirs:
         if not os.path.exists(dir):
@@ -55,7 +55,7 @@ def run(twitter=True, wikipedia=True, nasdaq=True):
             )
 
     if nasdaq:
-        nasdaq_scraper(date, 'data/nasdaq')
+        nasdaq_scraper(today, 'data/nasdaq')
 
 if __name__ == '__main__':
     run(*argv[1:])
