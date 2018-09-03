@@ -62,7 +62,8 @@ def twitter_scraper(query, quantity=10, outfile='twitter.json'):
             })
 
         # write to file
-        json.dump(tweets, file, indent=4)
+        if len(tweets):
+            json.dump(tweets, file, indent=4)
 
 if __name__ == '__main__':
     twitter_scraper(*argv[1:])
