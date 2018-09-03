@@ -47,18 +47,23 @@ def twitter_scraper(query, quantity=10, outfile='twitter.json'):
     '''
 
     with open(outfile, 'w') as file:
-        #
-        # @tweet, contains the following attributes
-        #
+        # local variables
+        tweets = []
+
+        # structure tweets
         for tweet in query_tweets(query, int(quantity)):
-            json.dump({
+            tweets.append({
                 'text': tweet.text,
                 'likes': tweet.likes,
                 'retweets': tweet.retweets,
                 'replies': tweet.replies,
                 'user': tweet.user,
                 'timestamp': str(tweet.timestamp)
-            }, file, indent=4)
+            })
+
+        # write to file
+        if len(tweets):
+            json.dump(tweets, file, indent=4)
 
 if __name__ == '__main__':
     twitter_scraper(*argv[1:])
