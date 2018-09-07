@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 endpoint='xxx.xxx.xxx.xxx'
+port='xxxx'
 token='xxxxxxxxxxxxxxxxxx'
 
 hashtags = [
