@@ -6,7 +6,7 @@ from sys import argv
 from twitterscraper import query_tweets
 from config import endpoint, port, username, password
 
-def twitter_scraper(query, quantity=10, outfile='twitter.json', endpoint=False):
+def twitter_scraper(query, quantity=10, outfile='twitter.json'):
     '''
 
     @query, may contain the following pattern:
@@ -66,33 +66,6 @@ def twitter_scraper(query, quantity=10, outfile='twitter.json', endpoint=False):
     if len(tweets):
         with open(outfile, 'w') as file:
             json.dump(tweets, file, indent=4)
-
-        #
-        # send to endpoint: load_data, and login documentation can be reviewed:
-        #
-        #     - https://jeff1evesque.github.io/machine-learning.docs/latest
-        #
-        # Note: /registration is required for the supplied username + password
-        #
-        if endpoint:
-            # get access token
-            login = client.post(
-                'https://{}:{}/login'.format(endpoint, port),
-                headers={'Content-Type': 'application/json'},
-                data={'user[login]': username, 'user[password]': password}
-            )
-            token = login.json['access_token']
-
-            # data into payload
-
-            # send data
-            endpoint = 'https://{}:{}/load-data'.format(endpoint, port)
-            headers = {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
-
-            requests.post(endpoint, headers=headers, data=json.dumps(tweets))
 
 if __name__ == '__main__':
     twitter_scraper(*argv[1:])

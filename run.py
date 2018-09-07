@@ -39,8 +39,7 @@ def run(twitter=True, wikipedia=True, endpoint=True):
                     'data/twitter',
                     hashtag,
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                ),
-                endpoint=endpoint
+                )
             )
 
     if wikipedia:
