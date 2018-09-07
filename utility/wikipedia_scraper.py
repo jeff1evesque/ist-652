@@ -6,7 +6,7 @@ import wikipedia
 from os import path
 from functools import reduce
 
-def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json'):
+def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json', endpoint=False):
     '''
 
     This file uses the v1 wikipedia api:
@@ -50,6 +50,31 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json')
 
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
+
+        #
+        # send to endpoint: load_data, and login documentation can be reviewed:
+        #
+        #     - https://jeff1evesque.github.io/machine-learning.docs/latest
+        #
+        # Note: /registration is required for the supplied username + password
+        #
+        if endpoint:
+            # get access token
+            login = client.post(
+                'https://{}:{}/login'.format(endpoint, port),
+                headers={'Content-Type': 'application/json'},
+                data={'user[login]': username, 'user[password]': password}
+            )
+            token = login.json['access_token']
+
+            # send data
+            endpoint = 'https://{}:{}/load-data'.format(endpoint, port)
+            headers = {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+
+            requests.post(endpoint, headers=headers, data=json.dumps(r.json))
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
