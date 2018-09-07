@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import re
 import json
 import requests
 import wikipedia
@@ -16,6 +17,8 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json',
 
     '''
 
+    search_count = {}
+    regex = re.compile('[^a-zA-Z]')
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
 
     with open(outfile, 'w') as jsonfile:
@@ -48,35 +51,54 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json',
             except KeyError as e:
                 print('{} not valid: {}'.format(article, e))
 
+            # word frequency: load_data, and login documentation can be reviewed:
+            #
+            #     - https://jeff1evesque.github.io/machine-learning.docs/latest
+            #
+            # Note: /registration is required for the supplied username + password
+            #
+            if endpoint:
+                # get access token
+                login = client.post(
+                    'https://{}:{}/login'.format(endpoint, port),
+                    headers={'Content-Type': 'application/json'},
+                    data={'user[login]': username, 'user[password]': password}
+                )
+                token = login.json['access_token']
+
+                # article word count
+                words = article.split()
+                for word in words:
+                    word = regex.sub('', word).lower()
+                    if word in search_counts:
+                        search_count[word] += 1
+                    else:
+                        search_count[word] = 1
+
+                # data into payload
+                payload = {
+                    'properties': {
+                        'session_name': article_filename,
+                        'collection': 'ist-652-wikipedia',
+                        'dataset_type': 'file_upload',
+                        'session_type': 'data_append',
+                        'model_type': 'svm',
+                        'stream': 'True'
+                    },
+                    'dataset': [search_count]
+                }
+
+                # send data
+                endpoint = 'https://{}:{}/load-data'.format(endpoint, port)
+                headers = {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }
+
+                requests.post(endpoint, headers=headers, data=json.dumps(payload))
+
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
-
-        #
-        # send to endpoint: load_data, and login documentation can be reviewed:
-        #
-        #     - https://jeff1evesque.github.io/machine-learning.docs/latest
-        #
-        # Note: /registration is required for the supplied username + password
-        #
-        if endpoint:
-            # get access token
-            login = client.post(
-                'https://{}:{}/login'.format(endpoint, port),
-                headers={'Content-Type': 'application/json'},
-                data={'user[login]': username, 'user[password]': password}
-            )
-            token = login.json['access_token']
-
-            # data into payload
-
-            # send data
-            endpoint = 'https://{}:{}/load-data'.format(endpoint, port)
-            headers = {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            }
-
-            requests.post(endpoint, headers=headers, data=json.dumps(r.json))
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
