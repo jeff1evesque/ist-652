@@ -2,7 +2,8 @@
 
 endpoint='xxx.xxx.xxx.xxx'
 port='xxxx'
-token='xxxxxxxxxxxxxxxxxx'
+username='xxxxxxxxxxxxxxx'
+password='xxxxxxxxxxxxxxx'
 
 hashtags = [
     'apple',
