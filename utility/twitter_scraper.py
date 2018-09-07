@@ -83,6 +83,8 @@ def twitter_scraper(query, quantity=10, outfile='twitter.json', endpoint=False):
             )
             token = login.json['access_token']
 
+            # data into payload
+
             # send data
             endpoint = 'https://{}:{}/load-data'.format(endpoint, port)
             headers = {

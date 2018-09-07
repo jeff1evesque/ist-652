@@ -67,6 +67,8 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json',
             )
             token = login.json['access_token']
 
+            # data into payload
+
             # send data
             endpoint = 'https://{}:{}/load-data'.format(endpoint, port)
             headers = {
