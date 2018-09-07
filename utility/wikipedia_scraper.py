@@ -51,7 +51,10 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json',
             except KeyError as e:
                 print('{} not valid: {}'.format(article, e))
 
-            # word frequency: load_data, and login documentation can be reviewed:
+            #
+            # word frequency: each word will contain a frequency count, used for
+            #     sentiment related analysis. The corresponding 'load_data', and
+            #     'login' endpoint documentation, can be reviewed:
             #
             #     - https://jeff1evesque.github.io/machine-learning.docs/latest
             #
