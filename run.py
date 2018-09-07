@@ -8,7 +8,7 @@ from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from dateutil.relativedelta import relativedelta
 
-def run(twitter=True, wikipedia=True):
+def run(twitter=True, wikipedia=True, endpoint=True):
     '''
 
     execute custom twitter + wikipedia scraping.
@@ -39,7 +39,8 @@ def run(twitter=True, wikipedia=True):
                     'data/twitter',
                     hashtag,
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                )
+                ),
+                endpoint=endpoint
             )
 
     if wikipedia:
@@ -50,7 +51,8 @@ def run(twitter=True, wikipedia=True):
                     'data/wikipedia',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                )
+                ),
+                endpoint=endpoint
             )
 
 if __name__ == '__main__':
