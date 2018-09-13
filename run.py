@@ -3,7 +3,7 @@
 import os
 import datetime
 from sys import argv
-from config import username, password, date, hashtags, endpoint, port, hashtags
+from config import username, password, hashtags, endpoint, port, hashtags
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from dateutil.relativedelta import relativedelta
