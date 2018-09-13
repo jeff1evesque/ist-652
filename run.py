@@ -50,7 +50,7 @@ def run(twitter=True, wikipedia=True, endpoint=True):
         for date in dates:
             wikipedia_scraper(
                 username=username,
-                password=password
+                password=password,
                 date=date,
                 outfile='{}/{}--{}.json'.format(
                     'data/wikipedia',
