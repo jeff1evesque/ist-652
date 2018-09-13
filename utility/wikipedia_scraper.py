@@ -7,7 +7,17 @@ import wikipedia
 from os import path
 from functools import reduce
 
-def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json', endpoint=False):
+
+def wikipedia_scraper(
+    date,
+    project='en.wikipedia.org',
+    outfile='facebook.json',
+    endpoint=False,
+    port=8585,
+    username,
+    password
+):
+
     '''
 
     This file uses the v1 wikipedia api:
@@ -35,8 +45,8 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json',
         for item in json.loads(r.text)['items'][0]['articles']:
             article = item['article']
             repls = {':': '--colon--', '/': '--fslash--'}
-            article_filename = reduce(lambda a, kv: a.replace(*kv), repls.items(), article)
-            filepath = 'data/wikipedia/articles/{}.txt'.format(article_filename)
+            filename = reduce(lambda a, kv: a.replace(*kv), repls.items(), article)
+            filepath = 'data/wikipedia/articles/{}.txt'.format(filename)
 
             try:
                 if not path.isfile(filepath):
@@ -62,7 +72,7 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json',
             #
             if endpoint:
                 # get access token
-                login = client.post(
+                login = requests.post(
                     'https://{}:{}/login'.format(endpoint, port),
                     headers={'Content-Type': 'application/json'},
                     data={'user[login]': username, 'user[password]': password}
@@ -81,7 +91,7 @@ def wikipedia_scraper(date, project='en.wikipedia.org', outfile='facebook.json',
                 # data into payload
                 payload = {
                     'properties': {
-                        'session_name': article_filename,
+                        'session_name': filename,
                         'collection': 'ist-652-wikipedia',
                         'dataset_type': 'file_upload',
                         'session_type': 'data_append',
