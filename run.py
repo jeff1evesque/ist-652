@@ -23,10 +23,6 @@ def run(twitter=True, wikipedia=True, endpoint=True):
     current = datetime.date(2016, 8, 1)
     dates = []
 
-    username = config.username
-    password = config.password
-    port = config.port
-
     while current <= today:
         dates.append(datetime.datetime.strftime(current, '%Y/%m/01'))
         current += relativedelta(months=1)
