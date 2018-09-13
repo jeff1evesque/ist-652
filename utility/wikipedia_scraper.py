@@ -13,7 +13,7 @@ def wikipedia_scraper(
     password,
     date,
     project='en.wikipedia.org',
-    outfile='facebook.json',
+    outfile='wikipedia.json',
     endpoint=False,
     port=8585
 ):
