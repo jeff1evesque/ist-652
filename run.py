@@ -49,16 +49,16 @@ def run(twitter=True, wikipedia=True, endpoint=True):
     if wikipedia:
         for date in dates:
             wikipedia_scraper(
-                date,
+                username=username,
+                password=password
+                date=date,
                 outfile='{}/{}--{}.json'.format(
                     'data/wikipedia',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),
                 endpoint=endpoint,
-                port=port,
-                username=username,
-                password=password
+                port=port
             )
 
 if __name__ == '__main__':

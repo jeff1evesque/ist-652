@@ -9,13 +9,13 @@ from functools import reduce
 
 
 def wikipedia_scraper(
+    username,
+    password,
     date,
     project='en.wikipedia.org',
     outfile='facebook.json',
     endpoint=False,
-    port=8585,
-    username,
-    password
+    port=8585
 ):
 
     '''
