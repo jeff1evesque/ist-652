@@ -55,7 +55,7 @@ def run(twitter=True, wikipedia=True, endpoint=True):
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),
-                endpoint=endpoint
+                endpoint=endpoint,
                 port=port,
                 username=username,
                 password=password
