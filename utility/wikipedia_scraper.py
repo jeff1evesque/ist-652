@@ -6,6 +6,7 @@ import requests
 import wikipedia
 from os import path
 from functools import reduce
+from nltk.stem import PorterStemmer
 
 
 def wikipedia_scraper(
@@ -30,6 +31,7 @@ def wikipedia_scraper(
     search_count = {}
     regex = re.compile('[^a-zA-Z]')
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
+    ps = PorterStemmer()
 
     with open(outfile, 'w') as jsonfile:
         # scrape wikipedia api
@@ -61,6 +63,15 @@ def wikipedia_scraper(
             except KeyError as e:
                 print('{} not valid: {}'.format(article, e))
 
+            # article word count
+            words = article.split()
+            for word in words:
+                word = regex.sub('', ps.stem(word)).lower()
+                if word in search_counts:
+                    search_count[word] += 1
+                else:
+                    search_count[word] = 1
+
             #
             # word frequency: each word will contain a frequency count, used for
             #     sentiment related analysis. The corresponding 'load_data', and
@@ -78,15 +89,6 @@ def wikipedia_scraper(
                     data={'user[login]': username, 'user[password]': password}
                 )
                 token = login.json['access_token']
-
-                # article word count
-                words = article.split()
-                for word in words:
-                    word = regex.sub('', word).lower()
-                    if word in search_counts:
-                        search_count[word] += 1
-                    else:
-                        search_count[word] = 1
 
                 # data into payload
                 payload = {
