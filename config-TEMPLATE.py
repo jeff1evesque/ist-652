@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+endpoint='xxx.xxx.xxx.xxx'
+port='xxxx'
+username='xxxxxxxxxxxxxxx'
+password='xxxxxxxxxxxxxxx'
+
 hashtags = [
     'apple',
     'walmart',

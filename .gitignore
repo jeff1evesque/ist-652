@@ -1,6 +1,7 @@
 # ignore files
 *.pyc
 /ubuntu-*-cloudimg-console.log
+/config.py
 
 # ignore directories
 /data

@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 import json
+import requests
 from sys import argv
 from twitterscraper import query_tweets
+from config import endpoint, port, username, password
 
 def twitter_scraper(query, quantity=10, outfile='twitter.json'):
     '''

@@ -2,8 +2,8 @@
 
 import os
 import datetime
-from config import hashtags
 from sys import argv
+from config import username, password, hashtags, endpoint, port, hashtags
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from dateutil.relativedelta import relativedelta
@@ -45,12 +45,16 @@ def run(twitter=True, wikipedia=True):
     if wikipedia:
         for date in dates:
             wikipedia_scraper(
-                date,
+                username=username,
+                password=password,
+                date=date,
                 outfile='{}/{}--{}.json'.format(
                     'data/wikipedia',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                )
+                ),
+                endpoint=endpoint,
+                port=port
             )
 
 if __name__ == '__main__':
