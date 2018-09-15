@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-endpoint='xxx.xxx.xxx.xxx'
+endpoint=None
 port='xxxx'
 username='xxxxxxxxxxxxxxx'
 password='xxxxxxxxxxxxxxx'
