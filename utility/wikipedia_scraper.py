@@ -67,7 +67,7 @@ def wikipedia_scraper(
             words = article.split()
             for word in words:
                 word = regex.sub('', ps.stem(word)).lower()
-                if word in search_counts:
+                if word in search_count:
                     search_count[word] += 1
                 else:
                     search_count[word] = 1
