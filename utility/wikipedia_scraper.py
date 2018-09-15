@@ -51,10 +51,23 @@ def wikipedia_scraper(
             search_count[filename] = {}
             filepath = 'data/wikipedia/articles/{}.txt'.format(filename)
 
+            # write to file
             try:
                 if not path.isfile(filepath):
                     with open(filepath, 'w') as txtfile:
-                        txtfile.write(wikipedia.WikipediaPage(title=article).summary)
+                        # article content
+                        summary = wikipedia.WikipediaPage(title=article).summary
+                        txtfile.write(summary)
+
+                        # article word count
+                        words = summary.split()
+                        for word in words:
+                            word = regex.sub('', ps.stem(word)).lower()
+                            if word in search_count:
+                                search_count[filename][word] += 1
+                            else:
+                                search_count[filename][word] = 1
+
             except wikipedia.exceptions.DisambiguationError as e:
                 print('{} not valid, alternative titles: {}'.format(article, e.options))
             except wikipedia.exceptions.PageError as e:
@@ -63,15 +76,6 @@ def wikipedia_scraper(
                 print('not a valid article: {}'.format(e))
             except KeyError as e:
                 print('{} not valid: {}'.format(article, e))
-
-            # article word count
-            words = article.split()
-            for word in words:
-                word = regex.sub('', ps.stem(word)).lower()
-                if word in search_count:
-                    search_count[filename][word] += 1
-                else:
-                    search_count[filename][word] = 1
 
             #
             # word frequency: each word will contain a frequency count, used for
