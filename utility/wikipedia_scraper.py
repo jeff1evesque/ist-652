@@ -29,7 +29,7 @@ def wikipedia_scraper(
     '''
 
     search_count = {}
-    regex = re.compile('[^a-zA-Z]')
+    alpha_regex = '[^a-zA-Z]'
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
     ps = PorterStemmer()
 
@@ -62,7 +62,7 @@ def wikipedia_scraper(
                         # article word count
                         words = summary.split()
                         for word in words:
-                            stemmed = ps.stem(re.sub(regex, '', word).lower())
+                            stemmed = ps.stem(re.sub(alpha_regex, '', word).lower())
                             if stemmed in search_count:
                                 search_count[filename][stemmed] += 1
                             else:
