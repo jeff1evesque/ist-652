@@ -48,6 +48,7 @@ def wikipedia_scraper(
             article = item['article']
             repls = {':': '--colon--', '/': '--fslash--'}
             filename = reduce(lambda a, kv: a.replace(*kv), repls.items(), article)
+            search_count[filename] = {}
             filepath = 'data/wikipedia/articles/{}.txt'.format(filename)
 
             try:
@@ -68,9 +69,9 @@ def wikipedia_scraper(
             for word in words:
                 word = regex.sub('', ps.stem(word)).lower()
                 if word in search_count:
-                    search_count[word] += 1
+                    search_count[filename][word] += 1
                 else:
-                    search_count[word] = 1
+                    search_count[filename][word] = 1
 
             #
             # word frequency: each word will contain a frequency count, used for
