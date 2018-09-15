@@ -62,11 +62,11 @@ def wikipedia_scraper(
                         # article word count
                         words = summary.split()
                         for word in words:
-                            word = regex.sub('', ps.stem(word)).lower()
-                            if word in search_count:
-                                search_count[filename][word] += 1
+                            stemmed = ps.stem(re.sub(regex, '', word).lower())
+                            if stemmed in search_count:
+                                search_count[filename][stemmed] += 1
                             else:
-                                search_count[filename][word] = 1
+                                search_count[filename][stemmed] = 1
 
             except wikipedia.exceptions.DisambiguationError as e:
                 print('{} not valid, alternative titles: {}'.format(article, e.options))
