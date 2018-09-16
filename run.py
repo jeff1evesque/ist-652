@@ -6,6 +6,7 @@ from sys import argv
 from config import username, password, hashtags, endpoint, port, hashtags
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
+from utility.tfidf_transform import tfidf_transform
 from dateutil.relativedelta import relativedelta
 
 def run(twitter=True, wikipedia=True):
@@ -16,7 +17,13 @@ def run(twitter=True, wikipedia=True):
     '''
 
     prefix = 'data'
-    types = ['twitter', 'wikipedia/articles', 'wikipedia/popular']
+    types = [
+        'twitter',
+        'wikipedia/articles',
+        'wikipedia/popular',
+        'wikipedia/frequency',
+        'wikipedia/tfidf',
+    ]
     dirs = [prefix + '/' + type for type in types]
 
     today = datetime.date.today()
@@ -44,17 +51,30 @@ def run(twitter=True, wikipedia=True):
 
     if wikipedia:
         for date in dates:
-            word_frequency = wikipedia_scraper(
-                username=username,
-                password=password,
-                date=date,
+            # return word frequency: top 1000 articles per date
+            word_frequency = append(
+                wikipedia_scraper(
+                    username=username,
+                    password=password,
+                    date=date,
+                    outfile='{}/{}--{}.json'.format(
+                        'data/wikipedia/popular',
+                        date.replace('/', '-'),
+                        datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                    ),
+                    endpoint=endpoint,
+                    port=port
+                }
+            )
+
+            # vectorize + apply tfidf
+            tfidf_transform(
+                word_frequency,
                 outfile='{}/{}--{}.json'.format(
-                    'data/wikipedia/popular',
+                    'data/wikipedia/tfidf',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),
-                endpoint=endpoint,
-                port=port
             )
 
 if __name__ == '__main__':
