@@ -118,7 +118,10 @@ def wikipedia_scraper(
                 requests.post(endpoint, headers=headers, data=json.dumps(payload))
 
             else:
-                with open('data/wikipedia/word_frequency.json', 'w') as f:
+                filepath = 'data/wikipedia/frequency/{}.json'.format(
+                    filename
+                )
+                with open(filepath, 'w') as f:
                     json.dump(search_count, f)
 
         # report top 1000 article
