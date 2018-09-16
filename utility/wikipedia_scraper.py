@@ -62,8 +62,8 @@ def wikipedia_scraper(
                         # article word count
                         words = summary.split()
                         for word in words:
-                            stemmed = ps.stem(re.sub(alpha_regex, '', word).lower())
-                            if stemmed in search_count:
+                            stemmed = ps.stem(re.sub(alpha_regex, '', word).lower().strip())
+                            if stemmed in search_count[filename]:
                                 search_count[filename][stemmed] += 1
                             else:
                                 search_count[filename][stemmed] = 1
