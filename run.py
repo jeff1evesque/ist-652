@@ -16,7 +16,7 @@ def run(twitter=True, wikipedia=True):
     '''
 
     prefix = 'data'
-    types = ['twitter', 'wikipedia/articles']
+    types = ['twitter', 'wikipedia/articles', 'wikipedia/popular']
     dirs = [prefix + '/' + type for type in types]
 
     today = datetime.date.today()
@@ -49,7 +49,7 @@ def run(twitter=True, wikipedia=True):
                 password=password,
                 date=date,
                 outfile='{}/{}--{}.json'.format(
-                    'data/wikipedia',
+                    'data/wikipedia/popular',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),

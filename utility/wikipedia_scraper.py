@@ -6,6 +6,7 @@ import requests
 import wikipedia
 from os import path
 from functools import reduce
+from nltk.stem import PorterStemmer
 
 
 def wikipedia_scraper(
@@ -28,8 +29,9 @@ def wikipedia_scraper(
     '''
 
     search_count = {}
-    regex = re.compile('[^a-zA-Z]')
+    alpha_regex = '[^a-zA-Z]'
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
+    ps = PorterStemmer()
 
     with open(outfile, 'w') as jsonfile:
         # scrape wikipedia api
@@ -46,12 +48,26 @@ def wikipedia_scraper(
             article = item['article']
             repls = {':': '--colon--', '/': '--fslash--'}
             filename = reduce(lambda a, kv: a.replace(*kv), repls.items(), article)
+            search_count[filename] = {}
             filepath = 'data/wikipedia/articles/{}.txt'.format(filename)
 
+            # write to file
             try:
                 if not path.isfile(filepath):
                     with open(filepath, 'w') as txtfile:
-                        txtfile.write(wikipedia.WikipediaPage(title=article).summary)
+                        # article content
+                        summary = wikipedia.WikipediaPage(title=article).summary
+                        txtfile.write(summary)
+
+                        # article word count
+                        words = summary.split()
+                        for word in words:
+                            stemmed = ps.stem(re.sub(alpha_regex, '', word).lower().strip())
+                            if stemmed in search_count[filename]:
+                                search_count[filename][stemmed] += 1
+                            else:
+                                search_count[filename][stemmed] = 1
+
             except wikipedia.exceptions.DisambiguationError as e:
                 print('{} not valid, alternative titles: {}'.format(article, e.options))
             except wikipedia.exceptions.PageError as e:
@@ -79,15 +95,6 @@ def wikipedia_scraper(
                 )
                 token = login.json['access_token']
 
-                # article word count
-                words = article.split()
-                for word in words:
-                    word = regex.sub('', word).lower()
-                    if word in search_counts:
-                        search_count[word] += 1
-                    else:
-                        search_count[word] = 1
-
                 # data into payload
                 payload = {
                     'properties': {
@@ -109,6 +116,10 @@ def wikipedia_scraper(
                 }
 
                 requests.post(endpoint, headers=headers, data=json.dumps(payload))
+
+            else:
+                with open('data/wikipedia/word_frequency.json', 'w') as f:
+                    json.dump(search_count, f)
 
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)

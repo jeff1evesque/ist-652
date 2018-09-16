@@ -9,9 +9,13 @@ Vagrant.configure(2) do |config|
     vb.name = 'ist-652'
   end
 
+  ##
+  ## @punkt, required by nltk per https://stackoverflow.com/a/44208380.
+  ##
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y python3-pip
-    pip3 install lxml twitterscraper beautifulsoup4 python-dateutil wikipedia
+    pip3 install lxml twitterscraper beautifulsoup4 python-dateutil wikipedia nltk
+    python3 -c 'import nltk; nltk.download("punkt")'
   SHELL
 end
