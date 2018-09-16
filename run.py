@@ -44,7 +44,7 @@ def run(twitter=True, wikipedia=True):
 
     if wikipedia:
         for date in dates:
-            wikipedia_scraper(
+            word_frequency = wikipedia_scraper(
                 username=username,
                 password=password,
                 date=date,

@@ -124,5 +124,8 @@ def wikipedia_scraper(
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
 
+        # return word frequency
+        return(search_count)
+
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
