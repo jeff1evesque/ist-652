@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import json
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 
@@ -18,7 +19,7 @@ def tfidf_transform(corpus, outfile='tfidf.json'):
         myTfidf = TfidfVectorizer()
 
         # calculate tf-idf for each word
-        myTfs = myTfidf.fit_transform(corpus.values())
+        myTfs = myTfidf.fit_transform(corpus)
 
         # report top 1000 article
         json.dump(myTfs, jsonfile, indent=4)
