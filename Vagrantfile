@@ -16,6 +16,6 @@ Vagrant.configure(2) do |config|
     apt-get update
     apt-get install -y python3-pip
     pip3 install lxml twitterscraper beautifulsoup4 python-dateutil wikipedia nltk
-    python -c 'import nltk; nltk.download("punkt")'
+    python3 -c 'import nltk; nltk.download("punkt")'
   SHELL
 end
