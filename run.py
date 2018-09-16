@@ -52,19 +52,17 @@ def run(twitter=True, wikipedia=True):
     if wikipedia:
         for date in dates:
             # return word frequency: top 1000 articles per date
-            word_frequency = append(
-                wikipedia_scraper(
-                    username=username,
-                    password=password,
-                    date=date,
-                    outfile='{}/{}--{}.json'.format(
-                        'data/wikipedia/popular',
-                        date.replace('/', '-'),
-                        datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                    ),
-                    endpoint=endpoint,
-                    port=port
-                )
+            word_frequency = wikipedia_scraper(
+                username=username,
+                password=password,
+                date=date,
+                outfile='{}/{}--{}.json'.format(
+                    'data/wikipedia/popular',
+                    date.replace('/', '-'),
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                ),
+                endpoint=endpoint,
+                port=port
             )
 
             # vectorize + apply tfidf
