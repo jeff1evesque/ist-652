@@ -68,7 +68,7 @@ def wikipedia_scraper(
                         sklearn_tfidf = {}
                         words = summary.split()
                         for word in words:
-                            sklearn_tfidf[filename] = ' '.join(wordList)
+                            sklearn_tfidf[filename] = ' '.join(word)
 
                             stemmed = ps.stem(re.sub(alpha_regex, '', word).lower().strip())
                             if stemmed in search_count[filename]:
