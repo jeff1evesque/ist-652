@@ -34,6 +34,9 @@ def wikipedia_scraper(
     ps = PorterStemmer()
 
     with open(outfile, 'w') as jsonfile:
+        # local variables
+        sklearn_tfidf = {}
+
         # scrape wikipedia api
         r = requests.get(
             '{}/metrics/pageviews/top/{}/all-access/{}'.format(
@@ -65,7 +68,6 @@ def wikipedia_scraper(
                         # @sklearn_tfidf, is required by the 
                         #     TfidfVectorizer.fit_tranform.
                         #
-                        sklearn_tfidf = {}
                         words = summary.split()
                         sklearn_tfidf[filename] = ' '.join(words)
                         for word in words:
