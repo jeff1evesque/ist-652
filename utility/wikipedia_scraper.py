@@ -59,9 +59,17 @@ def wikipedia_scraper(
                         summary = wikipedia.WikipediaPage(title=article).summary
                         txtfile.write(summary)
 
+                        #
                         # article word count
+                        #
+                        # @sklearn_tfidf, is required by the 
+                        #     TfidfVectorizer.fit_tranform.
+                        #
+                        sklearn_tfidf = {}
                         words = summary.split()
                         for word in words:
+                            sklearn_tfidf[filename] = ' '.join(wordList)
+
                             stemmed = ps.stem(re.sub(alpha_regex, '', word).lower().strip())
                             if stemmed in search_count[filename]:
                                 search_count[filename][stemmed] += 1
@@ -127,8 +135,8 @@ def wikipedia_scraper(
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
 
-        # return word frequency
-        return(search_count)
+        # return concatenated tfidf
+        return(sklearn_tfidf)
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
