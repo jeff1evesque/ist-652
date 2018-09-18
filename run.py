@@ -68,7 +68,7 @@ def run(twitter=True, wikipedia=True):
             # vectorize + apply tfidf
             tfidf = tfidf_transform(
                 word_frequency,
-                outfile='{}/{}--{}.txt'.format(
+                outfile='{}/{}--{}'.format(
                     'data/wikipedia/tfidf',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
