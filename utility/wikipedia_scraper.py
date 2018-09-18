@@ -69,6 +69,7 @@ def wikipedia_scraper(
                         # @sklearn_tfidf, is required by the
                         #     TfidfVectorizer.fit_tranform.
                         #
+                        words = summary.split()
                         for word in words:
                             stemmed = ps.stem(re.sub(alpha_regex, '', word).lower().strip())
                             if stemmed in search_count[filename]:
