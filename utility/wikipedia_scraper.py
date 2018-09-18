@@ -65,7 +65,7 @@ def wikipedia_scraper(
                         #
                         # article word count
                         #
-                        # @sklearn_tfidf, is required by the 
+                        # @sklearn_tfidf, is required by the
                         #     TfidfVectorizer.fit_tranform.
                         #
                         words = summary.split()
