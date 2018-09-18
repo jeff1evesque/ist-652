@@ -5,6 +5,7 @@ import json
 import requests
 import wikipedia
 from os import path
+from sys import argv
 from functools import reduce
 from nltk.stem import PorterStemmer
 
@@ -68,8 +69,6 @@ def wikipedia_scraper(
                         # @sklearn_tfidf, is required by the
                         #     TfidfVectorizer.fit_tranform.
                         #
-                        words = summary.split()
-                        sklearn_tfidf[filename] = ' '.join(words)
                         for word in words:
                             stemmed = ps.stem(re.sub(alpha_regex, '', word).lower().strip())
                             if stemmed in search_count[filename]:
@@ -136,8 +135,8 @@ def wikipedia_scraper(
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
 
-        # return concatenated tfidf
-        return(sklearn_tfidf)
+        # return search count
+        return(search_count)
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
