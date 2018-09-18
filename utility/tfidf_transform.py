@@ -2,6 +2,7 @@
 
 import json
 from sys import argv
+from scipy import sparse
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def tfidf_transform(corpus, outfile='tfidf.json'):
@@ -18,17 +19,15 @@ def tfidf_transform(corpus, outfile='tfidf.json'):
 
     '''
 
-    with open(outfile, 'w') as txtfile:
-        # initialize tokenizer
-        myTfidf = TfidfVectorizer()
+    # initialize tokenizer
+    myTfidf = TfidfVectorizer()
 
-        # calculate tf-idf for each word
-        myTfidf = TfidfVectorizer()
-        myTfs = myTfidf.fit_transform(corpus)
+    # calculate tf-idf for each word
+    myTfs = myTfidf.fit_transform(corpus)
 
-        # report top 1000 article
-        json.dump(myTfs, txtfile, indent=4)
-        return(myTfs)
+    # report top 1000 article
+    sparse.save_npz(outfile, myTfs)
+    return(myTfs)
 
 if __name__ == '__main__':
     tfidf_transform(*argv[1:])
