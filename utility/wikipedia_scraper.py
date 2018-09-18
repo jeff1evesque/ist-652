@@ -5,6 +5,7 @@ import json
 import requests
 import wikipedia
 from os import path
+from sys import argv
 from functools import reduce
 from nltk.stem import PorterStemmer
 
@@ -34,6 +35,9 @@ def wikipedia_scraper(
     ps = PorterStemmer()
 
     with open(outfile, 'w') as jsonfile:
+        # local variables
+        sklearn_tfidf = {}
+
         # scrape wikipedia api
         r = requests.get(
             '{}/metrics/pageviews/top/{}/all-access/{}'.format(
@@ -59,8 +63,12 @@ def wikipedia_scraper(
                         summary = wikipedia.WikipediaPage(title=article).summary
                         txtfile.write(summary)
 
+                        #
                         # article word count
-                        words = summary.split()
+                        #
+                        # @sklearn_tfidf, is required by the
+                        #     TfidfVectorizer.fit_tranform.
+                        #
                         for word in words:
                             stemmed = ps.stem(re.sub(alpha_regex, '', word).lower().strip())
                             if stemmed in search_count[filename]:
@@ -118,11 +126,17 @@ def wikipedia_scraper(
                 requests.post(endpoint, headers=headers, data=json.dumps(payload))
 
             else:
-                with open('data/wikipedia/word_frequency.json', 'w') as f:
+                filepath = 'data/wikipedia/frequency/{}.json'.format(
+                    filename
+                )
+                with open(filepath, 'w') as f:
                     json.dump(search_count, f)
 
         # report top 1000 article
         json.dump(r.json(), jsonfile, indent=4)
+
+        # return search count
+        return(search_count)
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])

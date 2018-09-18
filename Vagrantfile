@@ -15,7 +15,15 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y python3-pip
-    pip3 install lxml twitterscraper beautifulsoup4 python-dateutil wikipedia nltk
+    pip3 install lxml \
+        twitterscraper \
+        beautifulsoup4 \
+        python-dateutil \
+        wikipedia \
+        nltk \
+        scikit-learn \
+        numpy \
+        scipy
     python3 -c 'import nltk; nltk.download("punkt")'
   SHELL
 end
