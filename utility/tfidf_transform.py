@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+from sys import argv
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def tfidf_transform(corpus, outfile='tfidf.json'):
@@ -17,16 +18,17 @@ def tfidf_transform(corpus, outfile='tfidf.json'):
 
     '''
 
-    with open(outfile, 'w') as jsonfile:
+    with open(outfile, 'w') as txtfile:
         # initialize tokenizer
         myTfidf = TfidfVectorizer()
 
         # calculate tf-idf for each word
         myTfidf = TfidfVectorizer()
-        myTfs = myTfidf.fit_transform(corpus.values())
+        myTfs = myTfidf.fit_transform(corpus)
 
         # report top 1000 article
-        json.dump(myTfs, jsonfile, indent=4)
+        json.dump(myTfs, txtfile, indent=4)
+        return(myTfs)
 
 if __name__ == '__main__':
-    tdif_transform(*argv[1:])
+    tfidf_transform(*argv[1:])
