@@ -4,7 +4,9 @@
 /config.py
 
 # ignore directories
-/data/{nasdaq,twitter,wikipedia}
+/data/nasdaq
+/data/twitter
+/data/wikipedia
 /.vagrant
 
 # don't ignore
