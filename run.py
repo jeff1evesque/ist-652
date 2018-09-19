@@ -51,7 +51,7 @@ def run(twitter=True, wikipedia=True):
 
     if wikipedia:
         # train dataset: use first month instance
-        for date in dates[1]:
+        for date in dates[0:1]:
             # return word frequency: top 1000 articles per date
             word_frequency = wikipedia_scraper(
                 username=username,
@@ -64,7 +64,8 @@ def run(twitter=True, wikipedia=True):
                     train=True
                 ),
                 endpoint=endpoint,
-                port=port
+                port=port,
+                train=True
             )
 
             # vectorize + apply tfidf
