@@ -39,7 +39,8 @@ def wikipedia_scraper(
 
     # use sample
     if use_sample:
-        articles = json.load('data/2016-08-01--sample-train.json')
+        with open('data/2016-08-01--sample-train.json', 'r') as f:
+            articles = json.load(f)['items'][0]['articles']
 
     # scrape wikipedia api
     else:
