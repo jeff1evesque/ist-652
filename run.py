@@ -50,7 +50,8 @@ def run(twitter=True, wikipedia=True):
             )
 
     if wikipedia:
-        for date in dates:
+        # train dataset: use first month instance
+        for date in dates[1]:
             # return word frequency: top 1000 articles per date
             word_frequency = wikipedia_scraper(
                 username=username,
