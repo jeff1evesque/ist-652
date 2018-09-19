@@ -58,9 +58,10 @@ def run(twitter=True, wikipedia=True):
                 password=password,
                 date=date,
                 outfile='{}/{}--{}.json'.format(
-                    'data/wikipedia/popular',
+                    'data/wikipedia/train/popular',
                     date.replace('/', '-'),
-                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S'),
+                    train=True
                 ),
                 endpoint=endpoint,
                 port=port
@@ -70,7 +71,7 @@ def run(twitter=True, wikipedia=True):
             tfidf = tfidf_transform(
                 word_frequency,
                 outfile='{}/{}--{}'.format(
-                    'data/wikipedia/tfidf',
+                    'data/wikipedia/train/tfidf',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),

@@ -17,7 +17,8 @@ def wikipedia_scraper(
     project='en.wikipedia.org',
     outfile='wikipedia.json',
     endpoint=False,
-    port=8585
+    port=8585,
+    train=False
 ):
 
     '''
@@ -33,6 +34,11 @@ def wikipedia_scraper(
     alpha_regex = '[^a-zA-Z]'
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
     ps = PorterStemmer()
+
+    if train:
+        basepath = 'data/wikipedia/train'
+    else:
+        basepath = 'data/wikipedia'
 
     with open(outfile, 'w') as jsonfile:
         # local variables
@@ -53,7 +59,7 @@ def wikipedia_scraper(
             repls = {':': '--colon--', '/': '--fslash--'}
             filename = reduce(lambda a, kv: a.replace(*kv), repls.items(), article)
             search_count[filename] = {}
-            filepath = 'data/wikipedia/articles/{}.txt'.format(filename)
+            filepath = '{}/articles/{}.txt'.format(basepath, filename)
 
             # write to file
             try:
@@ -127,7 +133,8 @@ def wikipedia_scraper(
                 requests.post(endpoint, headers=headers, data=json.dumps(payload))
 
             else:
-                filepath = 'data/wikipedia/frequency/{}.json'.format(
+                filepath = '{}/frequency/{}.json'.format(
+                    basepath,
                     filename
                 )
                 with open(filepath, 'w') as f:
