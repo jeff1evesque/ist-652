@@ -65,7 +65,7 @@ def run(twitter=True, wikipedia=True):
                 ),
                 endpoint=endpoint,
                 port=port,
-                train=True
+                use_sample=True
             )
 
             # vectorize + apply tfidf
