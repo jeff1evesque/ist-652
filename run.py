@@ -110,14 +110,14 @@ def run(twitter=True, wikipedia=True):
             [a['category'] for a in word_frequency['articles']]
         )
 
-        # svm prediction
-        svm_predict(
-            clf,
-            outfile='{}/svm--{}.json'.format(
-                'data/wikipedia/prediction',
-                datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-            )
-        )
+#        # svm prediction
+#        svm_predict(
+#            clf,
+#            outfile='{}/svm--{}.json'.format(
+#                'data/wikipedia/prediction',
+#                datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+#            )
+#        )
 
 if __name__ == '__main__':
     run(*argv[1:])
