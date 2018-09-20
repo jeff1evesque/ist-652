@@ -1,29 +1,26 @@
 #!/usr/bin/env python
 
-from sys import argv
 from sklearn.svm import SVC
 
-def svm_classify(X, y, pred = None, outfile='svm.txt'):
-
+def svm_fit(X, y):
     '''
 
-    This file requires sklearn's tokenizer + background tokenizer knowledge:
-
-        - http://scikit-learn.org/stable/modules/feature_extraction.html
-        - https://github.com/jeff1evesque/ist-652/files/2386056/PythonStartupTutorial-pt2.pdf
-
-    @corpus, dict with the filename as the key, and the terms as a list of
-        tokens in one long string.
+    fit and return an svm model.
 
     '''
 
     # fit svm
-    clf = SVC()
+    clf = SVC(probability=True)
     clf.fit(X,y)
+    return(clf)
 
-    # predict
-    if pred:
-        clf.predict(pred)
+def svm_predict(clf, pred, outfile='svm.txt'):
+    '''
 
-if __name__ == '__main__':
-    tfidf_transform(*argv[1:])
+    predict using provided svm model.
+
+    '''
+
+    result = clf.predict(pred)
+    with open(outfile, 'w') as txtfile:
+        txtfile.write(result)
