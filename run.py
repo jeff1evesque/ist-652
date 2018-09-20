@@ -105,7 +105,12 @@ def run(twitter=True, wikipedia=True):
                 ),
             )
 
+        #
         # generate svm
+        #
+        # @test, provides basepath to store the confusion matrix, and
+        #     erro rate results.
+        #
         clf = svm_fit(
             tfidf,
             [a['category'] for a in word_frequency['articles']],
