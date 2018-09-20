@@ -2202,7 +2202,8 @@
                 {
                     "rank": 367,
                     "views": 15452,
-                    "article": "American_Horror_Story"
+                    "article": "American_Horror_Story",
+                    "category": "tv_movie"
                 },
                 {
                     "rank": 368,
@@ -2537,7 +2538,8 @@
                 {
                     "rank": 423,
                     "views": 14475,
-                    "article": "Rothschild_family"
+                    "article": "Rothschild_family",
+                    "category": "other"
                 },
                 {
                     "rank": 424,
