@@ -23,7 +23,8 @@ Vagrant.configure(2) do |config|
         nltk \
         scikit-learn \
         numpy \
-        scipy
+        scipy \
+        matplotlib
     python3 -c 'import nltk; nltk.download("punkt")'
   SHELL
 end
