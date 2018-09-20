@@ -50,6 +50,29 @@ def run(twitter=True, wikipedia=True):
             )
 
     if wikipedia:
+        for date in dates:
+            # return word frequency: top 1000 articles per date
+            word_frequency = wikipedia_scraper(
+                username=username,
+                password=password,
+                date=date,
+                outfile='{}/{}--{}.json'.format(
+                    'data/wikipedia/popular',
+                    date.replace('/', '-'),
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                )
+            )
+
+            # vectorize + apply tfidf
+            tfidf = tfidf_transform(
+                word_frequency,
+                outfile='{}/{}--{}'.format(
+                    'data/wikipedia/tfidf',
+                    date.replace('/', '-'),
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                ),
+            )
+
         # train dataset: use first month instance
         for date in dates[0:1]:
             # return word frequency: top 1000 articles per date
@@ -60,11 +83,8 @@ def run(twitter=True, wikipedia=True):
                 outfile='{}/{}--{}.json'.format(
                     'data/wikipedia/train/popular',
                     date.replace('/', '-'),
-                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S'),
-                    train=True
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),
-                endpoint=endpoint,
-                port=port,
                 use_sample=True
             )
 
