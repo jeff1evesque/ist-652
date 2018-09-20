@@ -32,10 +32,27 @@ def svm_fit(X, y, test=True):
 
         # error rate: computed with confusion matrix
         labels = clf.classes_
+
+        # report: confusion matrix + error rate
         cm = confusion_matrix(y_test, pred, labels)
+        error = 1-sum(np.diagonal(cm)/cm.sum())
+        with open('data/wikipedia/train/error.txt', 'r') as txtfile:
+            txtfile.writelines([
+                '=================',
+                'Confusion Matrix:',
+                '=================',
+                '',
+                cm,
+                '',
+                '=================',
+                'Error Rate:',
+                '=================',
+                error
+            ])
+        print(cm)
+        print('stuff: {}'.format(1-sum(np.diagonal(cm)/cm.sum())))
 
         # plot: confusion matrix
-        print(cm)
         fig = plt.figure()
         ax = fig.add_subplot(111)
         cax = ax.matshow(cm)
