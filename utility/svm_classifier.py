@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 
-def svm_fit(X, y, test=True):
+def svm_fit(X, y, test=False):
     '''
 
     fit and return an svm model.
@@ -36,7 +36,7 @@ def svm_fit(X, y, test=True):
         # report: confusion matrix + error rate
         cm = confusion_matrix(y_test, pred, labels)
         error = 1-sum(np.diagonal(cm)/cm.sum())
-        with open('data/wikipedia/train/error.txt', 'r') as txtfile:
+        with open('{}/error.txt'.format(test), 'r') as txtfile:
             txtfile.writelines([
                 '=================',
                 'Confusion Matrix:',
@@ -50,7 +50,7 @@ def svm_fit(X, y, test=True):
                 error
             ])
         print(cm)
-        print('stuff: {}'.format(1-sum(np.diagonal(cm)/cm.sum())))
+        print('error rate: {}'.format(error))
 
         # plot: confusion matrix
         fig = plt.figure()
@@ -58,7 +58,7 @@ def svm_fit(X, y, test=True):
         cax = ax.matshow(cm)
         plt.title('Confusion matrix of the classifier')
         fig.colorbar(cax)
-        fig.savefig('visualization/svm_confusion_matrix.png')
+        fig.savefig('{}/svm_confusion_matrix.png'.format(test))
         ax.set_xticklabels([''] + [str(i) for i in labels])
         ax.set_yticklabels([''] + [str(i) for i in labels])
         plt.xlabel('Predicted')

@@ -19,8 +19,8 @@ def run(twitter=True, wikipedia=True):
 
     prefix = 'data'
     types = [
-        'visualization',
         'twitter',
+        'wikipedia/test',
         'wikipedia/articles',
         'wikipedia/popular',
         'wikipedia/frequency',
@@ -108,7 +108,8 @@ def run(twitter=True, wikipedia=True):
         # generate svm
         clf = svm_fit(
             tfidf,
-            [a['category'] for a in word_frequency['articles']]
+            [a['category'] for a in word_frequency['articles']],
+            test='data/wikipedia/test'
         )
 
 #        # svm prediction
