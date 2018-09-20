@@ -19,6 +19,7 @@ def run(twitter=True, wikipedia=True):
 
     prefix = 'data'
     types = [
+        'visualization',
         'twitter',
         'wikipedia/articles',
         'wikipedia/popular',
