@@ -7,6 +7,7 @@ from config import username, password, hashtags, endpoint, port, hashtags
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from utility.tfidf_transform import tfidf_transform
+from utility.svm_classifier import svm_classify
 from dateutil.relativedelta import relativedelta
 
 def run(twitter=True, wikipedia=True):
@@ -94,13 +95,16 @@ def run(twitter=True, wikipedia=True):
 
             # vectorize + apply tfidf
             tfidf = tfidf_transform(
-                word_frequency,
+                word_frequency['search_count'],
                 outfile='{}/{}--{}'.format(
                     'data/wikipedia/train/tfidf',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),
             )
+
+            # generate svm
+            svm_classify(tfidf, word_frequency['articles'])
 
 if __name__ == '__main__':
     run(*argv[1:])

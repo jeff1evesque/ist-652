@@ -151,7 +151,7 @@ def wikipedia_scraper(
                 json.dump(search_count, f)
 
     # return search count
-    return(search_count)
+    return({'search_count': search_count, 'articles': articles})
 
 if __name__ == '__main__':
     wikipedia_scraper(*argv[1:])
