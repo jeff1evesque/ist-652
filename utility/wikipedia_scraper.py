@@ -138,9 +138,15 @@ def wikipedia_scraper(
             requests.post(endpoint, headers=headers, data=json.dumps(payload))
 
         else:
-            filepath = 'data/wikipedia/frequency/{}.json'.format(
-                filename
-            )
+            if use_sample:
+                filepath = 'data/wikipedia/train/frequency/{}.json'.format(
+                    filename
+                )
+            else:
+                filepath = 'data/wikipedia/frequency/{}.json'.format(
+                    filename
+                )
+
             with open(filepath, 'w') as f:
                 json.dump(search_count, f)
 
