@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from sklearn.svm import SVC
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 def svm_fit(X, y):
     '''
@@ -21,6 +22,7 @@ def svm_predict(clf, pred, outfile='svm.txt'):
 
     '''
 
-    result = clf.predict(pred)
+    input = vec.transform(pred)
+    result = clf.predict(input)
     with open(outfile, 'w') as txtfile:
         txtfile.write(result)
