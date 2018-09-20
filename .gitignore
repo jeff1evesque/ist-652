@@ -4,5 +4,10 @@
 /config.py
 
 # ignore directories
-/data
+/data/nasdaq
+/data/twitter
+/data/wikipedia
 /.vagrant
+
+# don't ignore
+!/data/2016-08-01--2018-09-19T19-07-57--sample-train.json

@@ -7,6 +7,7 @@ from config import username, password, hashtags, endpoint, port, hashtags
 from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from utility.tfidf_transform import tfidf_transform
+from utility.svm_classifier import svm_fit, svm_predict
 from dateutil.relativedelta import relativedelta
 
 def run(twitter=True, wikipedia=True):
@@ -23,6 +24,11 @@ def run(twitter=True, wikipedia=True):
         'wikipedia/popular',
         'wikipedia/frequency',
         'wikipedia/tfidf',
+        'wikipedia/train/articles',
+        'wikipedia/train/popular',
+        'wikipedia/train/frequency',
+        'wikipedia/train/tfidf',
+        'wikipedia/prediction',
     ]
     dirs = [prefix + '/' + type for type in types]
 
@@ -60,9 +66,7 @@ def run(twitter=True, wikipedia=True):
                     'data/wikipedia/popular',
                     date.replace('/', '-'),
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-                ),
-                endpoint=endpoint,
-                port=port
+                )
             )
 
             # vectorize + apply tfidf
@@ -74,6 +78,46 @@ def run(twitter=True, wikipedia=True):
                     datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
                 ),
             )
+
+        # train dataset: use first month instance
+        for date in dates[0:1]:
+            # return word frequency: top 1000 articles per date
+            word_frequency = wikipedia_scraper(
+                username=username,
+                password=password,
+                date=date,
+                outfile='{}/{}--{}.json'.format(
+                    'data/wikipedia/train/popular',
+                    date.replace('/', '-'),
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                ),
+                use_sample=True
+            )
+
+            # vectorize + apply tfidf
+            tfidf = tfidf_transform(
+                word_frequency['search_count'],
+                outfile='{}/{}--{}'.format(
+                    'data/wikipedia/train/tfidf',
+                    date.replace('/', '-'),
+                    datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+                ),
+            )
+
+        # generate svm
+        clf = svm_fit(
+            tfidf,
+            [a['category'] for a in word_frequency['articles']]
+        )
+
+#        # svm prediction
+#        svm_predict(
+#            clf,
+#            outfile='{}/svm--{}.json'.format(
+#                'data/wikipedia/prediction',
+#                datetime.datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+#            )
+#        )
 
 if __name__ == '__main__':
     run(*argv[1:])
