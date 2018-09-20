@@ -28,7 +28,7 @@ def run(twitter=True, wikipedia=True):
         'wikipedia/train/popular',
         'wikipedia/train/frequency',
         'wikipedia/train/tfidf',
-        'data/wikipedia/prediction',
+        'wikipedia/prediction',
     ]
     dirs = [prefix + '/' + type for type in types]
 
