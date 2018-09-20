@@ -104,7 +104,10 @@ def run(twitter=True, wikipedia=True):
             )
 
             # generate svm
-            svm_classify(tfidf, word_frequency['articles'])
+            svm_classify(
+                tfidf,
+                [a['category'] for a in word_frequency['articles']]
+            )
 
 if __name__ == '__main__':
     run(*argv[1:])
