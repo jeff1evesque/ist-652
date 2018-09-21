@@ -124,12 +124,12 @@ def run(twitter=True, wikipedia=True):
         # @test, provides basepath to store the confusion matrix, and
         #     erro rate results.
         #
-        features = [10, 25, 50]
+        features = [10, 20, 50]
         for num in features:
-            selected = chi_squared(X, y, k=num)
+            csquared = chi_squared(X, y, k=num)
             svm = svm_fit(
-                selected['features'],
-                selected['labels'],
+                csquared,
+                y,
                 test='data/wikipedia/test',
                 suffix=num
             )
