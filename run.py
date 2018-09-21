@@ -130,7 +130,8 @@ def run(twitter=True, wikipedia=True):
             svm = svm_fit(
                 selected['features'],
                 selected['labels'],
-                test='data/wikipedia/test'
+                test='data/wikipedia/test',
+                suffix=num
             )
 
 #        # svm prediction
