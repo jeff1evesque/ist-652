@@ -37,10 +37,16 @@ def wikipedia_scraper(
     alpha_regex = '[^a-zA-Z]'
     rest_v1 = 'https://wikimedia.org/api/rest_v1'
 
-    # use sample
+    #
+    # use sample: remove other, since it is a catch all category,
+    #     for articles which could not be categorized.  Specifically,
+    #     historical article, and a wikipedia api endpoint being
+    #     grouped together, which negatively impact the model.
+    #
     if use_sample:
         with open('data/2016-08-01--sample-train.json', 'r') as f:
             articles = json.load(f)['items'][0]['articles']
+            articles = [a for a in articles if a['category'] != 'other']
 
     # scrape wikipedia api
     else:

@@ -8,6 +8,7 @@ from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from utility.tfidf_transform import tfidf_transform
 from utility.svm_classifier import svm_fit, svm_predict
+from utility.reduce_features import chi_squared
 from dateutil.relativedelta import relativedelta
 
 def run(twitter=True, wikipedia=True):
@@ -105,17 +106,33 @@ def run(twitter=True, wikipedia=True):
                 ),
             )
 
+        # data
+        X = tfidf
+        y = [a['category'] for a in word_frequency['articles']]
+
         #
         # generate svm
         #
         # @test, provides basepath to store the confusion matrix, and
         #     erro rate results.
         #
-        clf = svm_fit(
-            tfidf,
-            [a['category'] for a in word_frequency['articles']],
-            test='data/wikipedia/test'
-        )
+        svm_fit(X, y, test='data/wikipedia/test')
+
+        #
+        # generate svm: iterative feature reduction
+        #
+        # @test, provides basepath to store the confusion matrix, and
+        #     erro rate results.
+        #
+        features = [10, 20, 50, 300]
+        for num in features:
+            csquared = chi_squared(X, y, k=num)
+            svm = svm_fit(
+                csquared,
+                y,
+                test='data/wikipedia/test',
+                suffix=num
+            )
 
 #        # svm prediction
 #        svm_predict(

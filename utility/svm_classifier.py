@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 
-def svm_fit(X, y, test=False):
+def svm_fit(X, y, test=False, suffix='normal', test_size=0.33):
     '''
 
     fit and return an svm model.
@@ -22,7 +22,7 @@ def svm_fit(X, y, test=False):
         X_train, X_test, y_train, y_test = train_test_split(
             X,
             y,
-            test_size=0.33,
+            test_size=test_size,
             random_state=42
         )
 
@@ -36,18 +36,18 @@ def svm_fit(X, y, test=False):
         # report: confusion matrix + error rate
         cm = confusion_matrix(y_test, pred, labels)
         error = 1-sum(np.diagonal(cm)/cm.sum())
-        with open('{}/error.txt'.format(test), 'r') as txtfile:
+        with open('{}/error--{}.txt'.format(test, suffix), 'w') as txtfile:
             txtfile.writelines([
-                '=================',
-                'Confusion Matrix:',
-                '=================',
+                '=================\n',
+                'Confusion Matrix:\n',
+                '=================\n',
                 '',
-                cm,
-                '',
-                '=================',
-                'Error Rate:',
-                '=================',
-                error
+                str(cm),
+                '\n\n',
+                '=================\n',
+                'Error Rate:\n',
+                '=================\n',
+                str(error)
             ])
         print(cm)
         print('error rate: {}'.format(error))
@@ -56,9 +56,9 @@ def svm_fit(X, y, test=False):
         fig = plt.figure()
         ax = fig.add_subplot(111)
         cax = ax.matshow(cm)
-        plt.title('Confusion matrix of the classifier')
+        plt.title('SVM confusion matrix: with {} error'.format(error))
         fig.colorbar(cax)
-        fig.savefig('{}/svm_confusion_matrix.png'.format(test))
+        fig.savefig('{}/svm_confusion_matrix--{}.png'.format(test, suffix))
         ax.set_xticklabels([''] + [str(i) for i in labels])
         ax.set_yticklabels([''] + [str(i) for i in labels])
         plt.xlabel('Predicted')
