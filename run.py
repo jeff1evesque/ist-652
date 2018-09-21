@@ -8,7 +8,7 @@ from utility.twitter_scraper import twitter_scraper
 from utility.wikipedia_scraper import wikipedia_scraper
 from utility.tfidf_transform import tfidf_transform
 from utility.svm_classifier import svm_fit, svm_predict
-from utility.reduce_features import chi2
+from utility.reduce_features import chi_squared
 from dateutil.relativedelta import relativedelta
 
 def run(twitter=True, wikipedia=True):
@@ -126,7 +126,7 @@ def run(twitter=True, wikipedia=True):
         #
         features = [10, 25, 50]
         for num in features:
-            selected = chi2(X, y, num)
+            selected = chi_squared(X, y, k=num)
             svm = svm_fit(
                 selected['features'],
                 selected['labels'],
