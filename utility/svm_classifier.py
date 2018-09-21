@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 
-def svm_fit(X, y, test=False, suffix='normal'):
+def svm_fit(X, y, test=False, suffix='normal', test_size=0.33):
     '''
 
     fit and return an svm model.
@@ -22,7 +22,7 @@ def svm_fit(X, y, test=False, suffix='normal'):
         X_train, X_test, y_train, y_test = train_test_split(
             X,
             y,
-            test_size=0.33,
+            test_size=test_size,
             random_state=42
         )
 
