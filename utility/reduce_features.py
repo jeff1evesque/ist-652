@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
 
 def chi2(X, y, k=5):
