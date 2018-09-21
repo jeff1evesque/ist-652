@@ -124,7 +124,7 @@ def run(twitter=True, wikipedia=True):
         # @test, provides basepath to store the confusion matrix, and
         #     erro rate results.
         #
-        features = [10, 20, 50]
+        features = [10, 20, 50, 300]
         for num in features:
             csquared = chi_squared(X, y, k=num)
             svm = svm_fit(
