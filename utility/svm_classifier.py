@@ -36,7 +36,7 @@ def svm_fit(X, y, test=False, suffix='normal', test_size=0.33):
         # report: confusion matrix + error rate
         cm = confusion_matrix(y_test, pred, labels)
         error = 1-sum(np.diagonal(cm)/cm.sum())
-        with open('{}/error--{}.txt'.format(test, suffix), 'r') as txtfile:
+        with open('{}/error--{}.txt'.format(test, suffix), 'w') as txtfile:
             txtfile.writelines([
                 '=================',
                 'Confusion Matrix:',
